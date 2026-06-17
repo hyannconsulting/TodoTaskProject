@@ -67,7 +67,9 @@ namespace Todo.Infrastructure.Repositories
             var item = await _applicationDbContext.FindAsync<TodoItems>(id);
             if (item == null) return false;
 
-           
+         //   _applicationDbContext.Set<TodoItems>().Remove(item);
+
+
             _applicationDbContext.Remove(item);
             await _applicationDbContext.SaveChangesAsync();
 
