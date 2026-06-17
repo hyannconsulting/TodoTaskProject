@@ -8,9 +8,9 @@ namespace Todo.Infrastructure.Services
     {
         private readonly ITodoTaskRepository todoTaskRepository = todoTaskRepository ?? throw new ArgumentNullException(nameof(todoTaskRepository));
 
-        public async Task<TodoItemResponse> GetAllItems()
+        public async Task<IEnumerable<TodoItemResponse>> GetAllItems()
         {
-            throw new NotImplementedException();
+           return await todoTaskRepository.GetAllTaskTodo();
         }
 
         public async Task CreateTask(CreateTodoTaskDto createTodoTaskDto)

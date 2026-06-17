@@ -8,6 +8,8 @@ namespace Todo.Application.Interfaces.Services
 {
     public interface ITodoServices
     { 
-          public Task<TodoItemResponse> GetAllItems();
+
+        public Task<IEnumerable<TodoItemResponse>> GetAllItems();
+        Task CreateTask(CreateTodoTaskDto createTodoTaskDto);
     }
 }

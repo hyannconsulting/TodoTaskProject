@@ -1,4 +1,5 @@
-﻿using Todo.Application.DTOs;
+﻿using Microsoft.EntityFrameworkCore;
+using Todo.Application.DTOs;
 using Todo.Application.Interfaces.Repositories;
 using Todo.Infrastructure.Data;
 
@@ -25,5 +26,16 @@ namespace Todo.Infrastructure.Repositories
                  
             await _applicationDbContext.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<TodoItemResponse>> GetAllTaskTodo()
+        {
+            var items = await _applicationDbContext.TodoItems.ToListAsync();
+            return items.Select(x => new TodoItemResponse
+            {
+                Id = x.Id,
+                Name = x.Name,
+                IsComplete = x.IsComplete,
+            });
+        } 
     }
 }
