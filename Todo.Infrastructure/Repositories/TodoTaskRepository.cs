@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Todo.Application.DTOs;
 using Todo.Application.Interfaces.Repositories;
+using Todo.Domain.Entities;
 using Todo.Infrastructure.Data;
 
 namespace Todo.Infrastructure.Repositories
@@ -22,7 +23,6 @@ namespace Todo.Infrastructure.Repositories
                     IsComplete = createTodoTaskDto.IsComplete
                 });
 
-
                  
             await _applicationDbContext.SaveChangesAsync();
         }
@@ -36,6 +36,42 @@ namespace Todo.Infrastructure.Repositories
                 Name = x.Name,
                 IsComplete = x.IsComplete,
             });
-        } 
+        }
+
+        public async Task<GetTodoTaskDto?> GetTaskById(int id)
+        {
+
+            var item= await _applicationDbContext.FindAsync<TodoItems>(id);
+            if (item == null) return null;
+
+            return new GetTodoTaskDto { Id = item.Id,Name = item.Name, IsComplete = item.IsComplete};
+        }
+
+        public async Task<bool> UpdateTaskById(int id , UpdateTodoDto taskdto)
+        {
+
+            var item = await _applicationDbContext.FindAsync<TodoItems>(id);
+            if (item == null) return false;
+
+
+            item.IsComplete = taskdto.IsComplete;
+            item.Name = taskdto.Name;
+
+            await _applicationDbContext.SaveChangesAsync();
+
+            return true;
+        }
+
+     public  async Task<bool>  DeleteTask(int id)
+        {
+            var item = await _applicationDbContext.FindAsync<TodoItems>(id);
+            if (item == null) return false;
+
+           
+            _applicationDbContext.Remove(item);
+            await _applicationDbContext.SaveChangesAsync();
+
+            return true;
+        }
     }
 }

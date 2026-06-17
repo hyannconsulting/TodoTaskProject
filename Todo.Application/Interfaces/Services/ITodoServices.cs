@@ -11,5 +11,10 @@ namespace Todo.Application.Interfaces.Services
 
         public Task<IEnumerable<TodoItemResponse>> GetAllItems();
         Task CreateTask(CreateTodoTaskDto createTodoTaskDto);
+        Task<GetTodoTaskDto?> GetTaskById(int id);
+
+        Task<bool> UpdateTaskById(int id, UpdateTodoDto taskdto);
+
+        Task<bool> DeleteTask(int id);
     }
 }
