@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 using Todo.Application.DTOs;
 using Todo.Application.Interfaces.Services;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
@@ -14,6 +15,11 @@ namespace Todo.Api.Endpoints
         {
 
             var group = app.MapGroup("/api/todotasks");
+
+
+            group.MapGet("/", GetAllItems)
+              .ProducesProblem(StatusCodes.Status404NotFound)
+              .ProducesProblem(StatusCodes.Status500InternalServerError);
 
             group.MapGet("{id:int}", GetItem)
               .ProducesProblem(StatusCodes.Status500InternalServerError);
@@ -37,9 +43,23 @@ namespace Todo.Api.Endpoints
             return app;
         }
 
-        public static async Task<Results<Ok<GetTodoTaskDto>, NotFound>> GetItem(int id, ITodoServices service)
+  
+
+   public static async Task<Results<Ok<IEnumerable<TodoItemResponse>>, NotFound>> GetAllItems([FromServices]ITodoServices service)
         {
-            var itemTask = await service.GetTaskById(id);
+            var tasks = await service.GetAllItems();
+
+            if(tasks == null) { return TypedResults.NotFound(); }
+
+            return TypedResults.Ok(tasks);
+        }
+        
+
+        public static async Task<Results<Ok<GetTodoTaskDto>, NotFound>> GetItem(
+          [Required, FromRoute(Name = "id")] int id, [FromServices] ITodoServices service)
+        {
+          //  [Required, FromRoute(Name = "user_id")] int userId,
+           var itemTask = await service.GetTaskById(id);
 
             if(itemTask == null) { return TypedResults.NotFound(); }
 

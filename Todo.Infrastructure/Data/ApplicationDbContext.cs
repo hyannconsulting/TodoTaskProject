@@ -21,22 +21,7 @@ namespace Todo.Infrastructure.Data
         {
             base.OnModelCreating(modelBuilder);
             
-            
-            //modelBuilder.Entity<TodoItems>()
-            //     .Property(x => x.Id)
-            //     .IsRequired()
-
-
-            //           builder.HasKey(x => x.Id);
-
-            //builder.Property(x => x.Task)
-            //    .HasMaxLength(1000);
-
-            //builder.ToTable("ToDoTasks");
-
-            //       modelBuilder.Entity<Blog>()
-            //.Property(b => b.Url)
-            //.IsRequired();
+                      
 
 
            SeedData(modelBuilder);

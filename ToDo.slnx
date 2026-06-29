@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/solutionItems/">
+    <File Path="cmd.txt" />
+  </Folder>
   <Folder Name="/src/">
     <Project Path="src/Todo.Api/Todo.Api.csproj" />
     <Project Path="Todo.Application/Todo.Application.csproj" Id="515911fb-cb33-4c90-af6a-bd0f48355684" />

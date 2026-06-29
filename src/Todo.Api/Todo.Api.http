@@ -1,12 +1,8 @@
 @Todo.Api_HostAddress = https://localhost:7197
 
-GET {{Todo.Api_HostAddress}}/weatherforecast/
-Accept: application/json
 
-###
-
-@id=1006
-GET {{Todo.Api_HostAddress}}/api/todotasks/{id:int}
+@id=1
+GET {{Todo.Api_HostAddress}}/api/todotasks/{{id}}
 
 ###
 
@@ -19,5 +15,15 @@ Content-Type: application/json
   "isComplete": 1
 }
 
+
+###
+
+GET {{Todo.Api_HostAddress}}/api/todotasks
+
+###
+
+@id=1
+
+DELETE {{Todo.Api_HostAddress}}/api/todotasks/{{id}}
 
 ###
